@@ -18,20 +18,20 @@ public class ParsingImplementation {
     /**
      * Quote counter needed for count number of quotes in each element. Default value is 0.
      */
-    int quoteCounter = 0;
+    static int quoteCounter = 0;
     /**
      * Item length needed for count item length. Default value is 0.
      */
-    int itemLength = 0;
+    static int itemLength = 0;
     /**
      * Boolean variable that need to define is letters or separator exists behind.
      */
-    boolean isLettersOrSeparatorBehind = false;
+    static boolean isLettersOrSeparatorBehind = false;
 
     /**
      * Printing all columns until reach COLUMN_INDEX index from FILE_PATH.
      */
-    public void run() {
+    public static void main(String[] args) {
         for (int columnIndex = 0; columnIndex <= COLUMN_INDEX; columnIndex++) {
             System.out.println(extractColumn(FILE_PATH, columnIndex));
         }
@@ -44,7 +44,7 @@ public class ParsingImplementation {
      * @param columnIndex Index of column that needed to extract to array.
      * @return Array of all values of column.
      */
-    private ArrayList<String> extractColumn(String filename, int columnIndex) {
+    private static ArrayList<String> extractColumn(String filename, int columnIndex) {
         // creating two arrays for column items and to get input lines.
         ArrayList<String> result = new ArrayList<>();
         ArrayList<String> allLines = readFile(filename);
@@ -68,7 +68,7 @@ public class ParsingImplementation {
      * @param filename String name of file.
      * @return Array of all lines in file.
      */
-    private ArrayList<String> readFile(String filename) {
+    private static ArrayList<String> readFile(String filename) {
         // creating arraylist for all lines in file.
         ArrayList<String> allLines = new ArrayList<>();
         try {
@@ -94,7 +94,7 @@ public class ParsingImplementation {
      * @param columnIndex Index of column that needed to extract.
      * @return Table row element string.
      */
-    private String getColumnItemAtLine(String line, int columnIndex) {
+    private static String getColumnItemAtLine(String line, int columnIndex) {
         if (!line.contains("\"")) { // if line does not contain quotes, then returning item from
             return line.split(",")[columnIndex];                        // line that has column index.
         } else { // if line contain quotes, then, at first, finding separator indexes.
@@ -113,7 +113,7 @@ public class ParsingImplementation {
      * @param line String in which needed to find separators.
      * @return Array with separator indexes.
      */
-    private int[] findSeparatorIndexes(String line) {
+    private static int[] findSeparatorIndexes(String line) {
         // setting default values to class variables.
         quoteCounter = 0;
         itemLength = 0;
@@ -137,7 +137,7 @@ public class ParsingImplementation {
      * @param separatorIndexes ArrayList of separator indexes.
      * @param charIndex Index of char.
      */
-    private void charHandler(char element, ArrayList<Integer> separatorIndexes, int charIndex) {
+    private static void charHandler(char element, ArrayList<Integer> separatorIndexes, int charIndex) {
         if (element == '\"') { // if char is quote, then change number of quotes.
             quoteCounter = quoteCounterHandler(quoteCounter, isLettersOrSeparatorBehind);
         } else if (element == ',') { // if char is comma, then checking if number of quotes is less than 0 or element
@@ -163,7 +163,7 @@ public class ParsingImplementation {
      *                                   false if were not.
      * @return quoteCounter +1 or -1 depending on the isLettersOrSeparatorBehind value.
      */
-    private int quoteCounterHandler(int quoteCounter, boolean isLettersOrSeparatorBehind) {
+    private static int quoteCounterHandler(int quoteCounter, boolean isLettersOrSeparatorBehind) {
         if (isLettersOrSeparatorBehind) {
             return quoteCounter - 1;
         } else {
@@ -177,7 +177,7 @@ public class ParsingImplementation {
      * @param separatorIndexes ArrayList of integers with separators indexes.
      * @return Array of integers with separators indexes.
      */
-    private int[] convertToArray(ArrayList<Integer> separatorIndexes) {
+    private static int[] convertToArray(ArrayList<Integer> separatorIndexes) {
         int[] separatorIndexesArray = new int[separatorIndexes.size()];
         for (int i = 0; i < separatorIndexes.size(); i++) {
             separatorIndexesArray[i] = separatorIndexes.get(i);
@@ -193,7 +193,7 @@ public class ParsingImplementation {
      * @param separatorIndexes Indexes of separators(in our case comma).
      * @return Table row element string.
      */
-    private String columnItemIfExistsSeparators(String line, int columnIndex, int[] separatorIndexes) {
+    private static String columnItemIfExistsSeparators(String line, int columnIndex, int[] separatorIndexes) {
         String columnItem;
         if (columnIndex == 0) { // if column index is 0, then getting first item from line.
             columnItem = line.substring(0, separatorIndexes[0]);
